@@ -1,56 +1,39 @@
-import { html, css, LitElement } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { html, css, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { IPerson } from './peepType';
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement('my-element')
 export class MyElement extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      border: solid 1px gray;
-      padding: 16px;
-      max-width: 800px;
-    }
-  `
-
   /**
    * The name to say "Hello" to.
    */
-  @property()
-  name = 'World'
 
-  /**
-   * The number of times the button has been clicked.
-   */
+  @property({ type: Object })
+  person: IPerson;
+
+  @property({ type: Array })
+  data: string[];
+
+  @property()
+  name = 'World';
+
   @property({ type: Number })
-  count = 0
+  count = 0;
 
   render() {
     return html`
-      <h1>Hello, ${this.name}!</h1>
-      <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
-      </button>
-      <slot></slot>
-    `
-  }
-
-  private _onClick() {
-    this.count++
-  }
-
-  foo(): string {
-    return 'foo'
+      <h1>${this.name}!</h1>
+      <h1>${this.count}!</h1>
+      <h1>${this.count * 2}!</h1>
+      <h1>${this.person.title}!</h1>
+      <h1>${this.person.age + 1}!</h1>
+      ${this.data.map((item) => html`<p>${item}</p>`)}
+    `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'my-element': MyElement
+    'my-element': MyElement;
   }
 }
